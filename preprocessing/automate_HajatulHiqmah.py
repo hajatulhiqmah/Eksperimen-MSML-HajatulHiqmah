@@ -12,7 +12,7 @@ except NameError:
     BASE_DIR = os.path.abspath(os.getcwd())
 
 # Path ke root direktori proyek (satu level di atas folder 'preprocessing')
-ROOT_DIR = os.path.dirname(BASE_DIR)
+ROOT_DIR = os.path.dirname(BASE_DIR) 
 
 # Path ke data mentah
 RAW_DATA_PATH = os.path.join(ROOT_DIR, 'wine_quality', 'winequality-red.csv')
