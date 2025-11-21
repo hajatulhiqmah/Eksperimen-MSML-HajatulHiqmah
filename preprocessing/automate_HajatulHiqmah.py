@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
-import os
+import os 
 
 def load_data(filepath):
     """Memuat data dari file CSV."""
