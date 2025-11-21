@@ -1,0 +1,10 @@
+artifact_location: file:///D:/MSML-Hajatul%20Hiqmah/membangun_model/mlruns/0/models/m-4d5d66b3bfa14ecc8eddcb31efd8ea52/artifacts
+creation_timestamp: 1763692919139
+experiment_id: '0'
+last_updated_timestamp: 1763692929252
+model_id: m-4d5d66b3bfa14ecc8eddcb31efd8ea52
+model_type: null
+name: model
+source_run_id: 02aadc727df44a5295c8998936386920
+status: 2
+status_message: null

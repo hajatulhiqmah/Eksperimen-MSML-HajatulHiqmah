@@ -1,89 +1,87 @@
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
 import os
-import argparse
 
-# --- PATH DEFINITIONS ---
-# Menggunakan os.path.abspath(__file__) untuk mendapatkan path absolut ke skrip ini
-# Ini membuatnya berfungsi baik secara lokal maupun di GitHub Actions
-try:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-except NameError:
-    # Jika __file__ tidak terdefinisi (misalnya, dijalankan di lingkungan interaktif tertentu)
-    BASE_DIR = os.path.abspath(os.getcwd())
-
-# Path ke root direktori proyek (satu level di atas folder 'preprocessing')
-ROOT_DIR = os.path.dirname(BASE_DIR) 
-
-# Path ke data mentah
-RAW_DATA_PATH = os.path.join(ROOT_DIR, 'wine_quality', 'winequality-red.csv')
-
-# Path untuk menyimpan data bersih
-PROCESSED_DATA_DIR = os.path.join(BASE_DIR, 'namadataset_preprocessing')
-PROCESSED_DATA_PATH = os.path.join(PROCESSED_DATA_DIR, 'wine_processed.csv')
-
-
-def load_data(path):
+def load_data(filepath):
     """Memuat data dari file CSV."""
-    print(f"Memuat data mentah dari: {path}")
-    if not os.path.exists(path):
-        print(f"Error: File tidak ditemukan di {path}")
-        return None
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"File tidak ditemukan di: {filepath}")
     
-    # Dataset ini menggunakan titik koma (;) sebagai pemisah
-    return pd.read_csv(path, sep=';')
+    # Membaca data, asumsikan separator koma untuk Heart Disease dataset
+    df = pd.read_csv(filepath)
+    return df
 
 def preprocess_data(df):
-    """
-    Menerapkan preprocessing pada data:
-    1. Membuat target biner 'quality_category'.
-    2. Menghapus kolom 'quality' asli.
-    """
-    print("Memulai preprocessing data...")
-    
+    """Melakukan preprocessing: cleaning, encoding, dan scaling."""
     df_processed = df.copy()
-    
-    # 1. Membuat kolom target biner ('quality_category')
-    # Kualitas > 5 dianggap 'baik' (1), sisanya 'buruk' (0)
-    df_processed['quality_category'] = df_processed['quality'].apply(lambda x: 1 if x > 5 else 0)
 
-    # 2. Menghapus kolom 'quality' asli
-    df_processed = df_processed.drop('quality', axis=1)
+    print("1. Handling Missing Values...")
+    # Mengisi nilai kosong dengan rata-rata (hanya kolom numerik)
+    # numeric_only=True digunakan untuk menghindari error jika ada kolom string
+    numeric_means = df_processed.mean(numeric_only=True)
+    df_processed.fillna(numeric_means, inplace=True)
+
+    print("2. Encoding Data Kategorikal...")
+    # Daftar kolom yang biasanya kategorikal di dataset Heart Disease
+    # cp: chest pain type, restecg: resting ecg results, slope: slope of the peak exercise, thal: thalassemia
+    # sex, fbs, exang, ca juga bisa dianggap kategori tapi kadang dibiarkan biner/ordinal
+    categorical_cols = ['cp', 'restecg', 'slope', 'thal']
     
-    print("Preprocessing selesai.")
+    # Tambahkan kolom bertipe object (teks) jika ada
+    object_cols = df_processed.select_dtypes(include=['object']).columns.tolist()
+    
+    # Gabungkan list kolom yang perlu di-encode
+    cols_to_encode = list(set(object_cols + [c for c in categorical_cols if c in df_processed.columns]))
+    
+    if cols_to_encode:
+        print(f"   Melakukan One-Hot Encoding pada: {cols_to_encode}")
+        df_processed = pd.get_dummies(df_processed, columns=cols_to_encode, drop_first=True)
+
+    print("3. Scaling Data Numerik...")
+    scaler = StandardScaler()
+    
+    # Kolom numerik kontinu yang perlu disamakan skalanya
+    numerical_cols = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak']
+    
+    # Pastikan kolom tersebut ada di dataset
+    existing_num_cols = [col for col in numerical_cols if col in df_processed.columns]
+    
+    if existing_num_cols:
+        print(f"   Melakukan Standard Scaling pada: {existing_num_cols}")
+        df_processed[existing_num_cols] = scaler.fit_transform(df_processed[existing_num_cols])
+
     return df_processed
 
-def save_data(df, path):
-    """Menyimpan dataframe yang telah diproses ke CSV."""
-    
-    # Pastikan direktori (folder) untuk menyimpan file ada
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    
-    print(f"Menyimpan data bersih ke: {path}")
-    df.to_csv(path, index=False)
-    print("Data bersih berhasil disimpan.")
+def save_data(df, output_path):
+    """Menyimpan data yang sudah diproses ke file CSV."""
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    df.to_csv(output_path, index=False)
+    print(f"Data berhasil disimpan di: {output_path}")
 
-def main(args):
-    """Fungsi utama untuk menjalankan alur kerja."""
-    print("Menjalankan skrip preprocessing otomatis...")
+def main():
+    # Lokasi file input (mentah) dan output (bersih)
+    # Pastikan file 'heart.csv' sudah ada di folder data/raw/
+    raw_data_path = '.././heart_disease/heart_disease_uci.csv'
+    processed_data_path = 'data/processed/heart_processed.csv'
+
+    print("=== Memulai Preprocessing Otomatis ===")
     
-    # Gunakan path dari argumen jika ada, jika tidak, gunakan path default
-    raw_path = args.input if args.input else RAW_DATA_PATH
-    processed_path = args.output if args.output else PROCESSED_DATA_PATH
-    
-    df_raw = load_data(raw_path)
-    
-    if df_raw is not None:
-        df_clean = preprocess_data(df_raw)
-        save_data(df_clean, processed_path)
-        print("Skrip preprocessing otomatis selesai.")
-    else:
-        print("Skrip dihentikan karena data mentah tidak ditemukan.")
+    try:
+        # 1. Load Data
+        df = load_data(raw_data_path)
+        print(f"Data awal dimuat: {df.shape}")
+        
+        # 2. Preprocess Data
+        df_clean = preprocess_data(df)
+        print(f"Data setelah diproses: {df_clean.shape}")
+        
+        # 3. Save Data
+        save_data(df_clean, processed_data_path)
+        print("=== Preprocessing Selesai ===")
+        
+    except Exception as e:
+        print(f"\nTERJADI KESALAHAN: {e}")
+        print("Pastikan file 'heart.csv' sudah di-upload ke folder 'data/raw/'.")
 
 if __name__ == "__main__":
-    # Menambahkan argparse untuk fleksibilitas (opsional tapi bagus)
-    parser = argparse.ArgumentParser(description="Script Preprocessing Data Wine.")
-    parser.add_argument('-i', '--input', type=str, help=f"Path ke file data mentah. Default: {RAW_DATA_PATH}")
-    parser.add_argument('-o', '--output', type=str, help=f"Path untuk menyimpan data bersih. Default: {PROCESSED_DATA_PATH}")
-    
-    args = parser.parse_args()
-    main(args)
+    main()

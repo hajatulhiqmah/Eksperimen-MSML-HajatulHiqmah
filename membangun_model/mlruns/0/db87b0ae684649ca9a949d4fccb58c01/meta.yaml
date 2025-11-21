@@ -1,0 +1,14 @@
+artifact_uri: file:///D:/MSML-Hajatul%20Hiqmah/membangun_model/mlruns/0/db87b0ae684649ca9a949d4fccb58c01/artifacts
+end_time: 1763693165670
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: db87b0ae684649ca9a949d4fccb58c01
+run_name: clumsy-wolf-575
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1763693150182
+status: 3
+tags: []
+user_id: Hajatul Hiqmah

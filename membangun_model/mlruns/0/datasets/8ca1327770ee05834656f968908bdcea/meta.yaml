@@ -1,0 +1,23 @@
+digest: 430faaba
+name: dataset
+profile: '{"num_rows": 184, "num_elements": 3864}'
+schema: '{"mlflow_colspec": [{"type": "double", "name": "age", "required": true},
+  {"type": "double", "name": "trestbps", "required": true}, {"type": "double", "name":
+  "chol", "required": true}, {"type": "double", "name": "thalch", "required": true},
+  {"type": "double", "name": "oldpeak", "required": true}, {"type": "double", "name":
+  "ca", "required": true}, {"type": "boolean", "name": "restecg_normal", "required":
+  true}, {"type": "boolean", "name": "restecg_st-t abnormality", "required": true},
+  {"type": "boolean", "name": "slope_flat", "required": true}, {"type": "boolean",
+  "name": "slope_upsloping", "required": true}, {"type": "boolean", "name": "cp_atypical
+  angina", "required": true}, {"type": "boolean", "name": "cp_non-anginal", "required":
+  true}, {"type": "boolean", "name": "cp_typical angina", "required": true}, {"type":
+  "boolean", "name": "exang_True", "required": true}, {"type": "boolean", "name":
+  "sex_Male", "required": true}, {"type": "boolean", "name": "fbs_True", "required":
+  true}, {"type": "boolean", "name": "thal_normal", "required": true}, {"type": "boolean",
+  "name": "thal_reversable defect", "required": true}, {"type": "boolean", "name":
+  "dataset_Hungary", "required": true}, {"type": "boolean", "name": "dataset_Switzerland",
+  "required": true}, {"type": "boolean", "name": "dataset_VA Long Beach", "required":
+  true}]}'
+source: '{"tags": {"mlflow.user": "Hajatul Hiqmah", "mlflow.source.name": ".\\modelling.py",
+  "mlflow.source.type": "LOCAL", "mlflow.source.git.commit": "1da1a637200ab4d1440b95bb2580edef7c9547fb"}}'
+source_type: code

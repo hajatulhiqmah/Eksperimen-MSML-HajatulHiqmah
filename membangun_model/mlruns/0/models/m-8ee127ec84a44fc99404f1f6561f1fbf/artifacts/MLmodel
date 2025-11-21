@@ -1,0 +1,49 @@
+artifact_path: file:///D:/MSML-Hajatul%20Hiqmah/membangun_model/mlruns/0/models/m-8ee127ec84a44fc99404f1f6561f1fbf/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.10
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+is_signature_from_type_hint: false
+mlflow_version: 3.5.1
+model_id: m-8ee127ec84a44fc99404f1f6561f1fbf
+model_size_bytes: 2869
+model_uuid: m-8ee127ec84a44fc99404f1f6561f1fbf
+prompts: null
+run_id: db87b0ae684649ca9a949d4fccb58c01
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "double", "name": "age", "required": true}, {"type": "double",
+    "name": "trestbps", "required": true}, {"type": "double", "name": "chol", "required":
+    true}, {"type": "double", "name": "thalch", "required": true}, {"type": "double",
+    "name": "oldpeak", "required": true}, {"type": "double", "name": "ca", "required":
+    true}, {"type": "boolean", "name": "restecg_normal", "required": true}, {"type":
+    "boolean", "name": "restecg_st-t abnormality", "required": true}, {"type": "boolean",
+    "name": "slope_flat", "required": true}, {"type": "boolean", "name": "slope_upsloping",
+    "required": true}, {"type": "boolean", "name": "cp_atypical angina", "required":
+    true}, {"type": "boolean", "name": "cp_non-anginal", "required": true}, {"type":
+    "boolean", "name": "cp_typical angina", "required": true}, {"type": "boolean",
+    "name": "exang_True", "required": true}, {"type": "boolean", "name": "sex_Male",
+    "required": true}, {"type": "boolean", "name": "fbs_True", "required": true},
+    {"type": "boolean", "name": "thal_normal", "required": true}, {"type": "boolean",
+    "name": "thal_reversable defect", "required": true}, {"type": "boolean", "name":
+    "dataset_Hungary", "required": true}, {"type": "boolean", "name": "dataset_Switzerland",
+    "required": true}, {"type": "boolean", "name": "dataset_VA Long Beach", "required":
+    true}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "int64", "shape": [-1]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2025-11-21 02:45:53.479878'

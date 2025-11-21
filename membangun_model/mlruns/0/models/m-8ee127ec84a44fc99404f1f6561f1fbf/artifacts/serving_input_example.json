@@ -1,0 +1,52 @@
+{
+  "dataframe_split": {
+    "columns": [
+      "age",
+      "trestbps",
+      "chol",
+      "thalch",
+      "oldpeak",
+      "ca",
+      "restecg_normal",
+      "restecg_st-t abnormality",
+      "slope_flat",
+      "slope_upsloping",
+      "cp_atypical angina",
+      "cp_non-anginal",
+      "cp_typical angina",
+      "exang_True",
+      "sex_Male",
+      "fbs_True",
+      "thal_normal",
+      "thal_reversable defect",
+      "dataset_Hungary",
+      "dataset_Switzerland",
+      "dataset_VA Long Beach"
+    ],
+    "data": [
+      [
+        0.9012235070239684,
+        0.0,
+        -0.2675001350309734,
+        120.0,
+        2.0140618299870567,
+        0.6763754045307443,
+        false,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true,
+        true,
+        false,
+        false,
+        false,
+        false,
+        false,
+        true
+      ]
+    ]
+  }
+}
