@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas
+          pip install pandas scikit-learn mlflow
       
       # Langkah 4: Menjalankan skrip Python untuk preprocessing
       - name: Run preprocessing script
@@ -48,4 +48,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: processed-heart-dataset # Nama artifact
-          path: preprocessing/data/processed\/.csv # Path ke file output
+          path: preprocessing/data/processed/heart_processed.csv # Path ke file output
